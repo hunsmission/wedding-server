@@ -1,0 +1,44 @@
+<configuration scan="true" scanPeriod="30 seconds">
+	<!-- Console Write -->
+	<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<pattern>[%d{yyyy-MM-dd HH:mm:ss:SSS}] %msg%n</pattern>
+		</encoder>
+	</appender>
+
+	<!-- Log File Management -->
+	<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<append>true</append>
+		<rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+			<!-- 로그 파일 경로 및 파일명 -->
+			<fileNamePattern>Log/${HOSTNAME}_log.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+
+			<!-- 용량 제한 -->
+			<maxFileSize>30MB</maxFileSize>
+
+			<!--  30일 지난 파일 삭제 -->
+			<maxHistory>30</maxHistory>
+			
+			<!-- 로그 파일 50GB 이상 시 삭제 -->
+			<totalSizeCap>50GB</totalSizeCap>
+			
+		</rollingPolicy>
+		<encoder>
+			<charset>UTF-8</charset>
+			<pattern>[%d{yyyy-MM-dd HH:mm:ss:SSS}][%logger{36}.%method:line%line] %msg%n</pattern>
+		</encoder>
+	</appender>	
+	
+	<root level="debug">
+		<appender-ref ref="CONSOLE" />
+		<appender-ref ref="FILE" />
+    </root>  
+	
+<!-- 
+	<logger name="com.emoldino" level="TRACE" additivity="false">
+		<appender-ref ref="CONSOLE" />
+		<appender-ref ref="FILE" />
+	</logger>  
+-->	
+	
+</configuration>

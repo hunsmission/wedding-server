@@ -1,0 +1,115 @@
+buildscript {
+    ext {
+        queryDslVersion = "5.0.0"
+    }
+}
+
+plugins {
+	id 'org.springframework.boot' version '2.7.3'
+	id 'io.spring.dependency-management' version '1.0.13.RELEASE'
+	id 'com.ewerk.gradle.plugins.querydsl' version '1.0.10'  // querydsl plugin
+	id 'java'
+}
+
+group = 'com.emoldino'
+version = '3.1.0-RELEASE'
+sourceCompatibility = '11'
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-cache'	
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'	
+	annotationProcessor 'org.projectlombok:lombok'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	
+	// Terminal
+	implementation 'com.fazecast:jSerialComm:[2.0.0,3.0.0)'
+	implementation 'org.apache.httpcomponents:httpclient:4.5.13'
+	implementation 'org.json:json:20210307'
+    implementation 'com.google.code.gson:gson:2.8.4'
+	compileOnly 'com.fasterxml.jackson.core:jackson-core:2.9.9'
+    compileOnly 'com.fasterxml.jackson.core:jackson-databind:2.9.4'
+	
+	// Logback
+	implementation 'org.slf4j:slf4j-api:1.7.36'    
+    implementation 'ch.qos.logback:logback-classic:1.2.11'
+    
+    // lombok
+    compileOnly 'org.projectlombok:lombok:1.18.20'
+    annotationProcessor 'org.projectlombok:lombok:1.18.20'
+    testCompileOnly 'org.projectlombok:lombok:1.18.20'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.20'
+    
+    // Querydsl
+    implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
+    implementation "com.querydsl:querydsl-apt:${queryDslVersion}"
+    
+    // Jpa FetchType.LAZY serialize
+    compile("com.fasterxml.jackson.datatype:jackson-datatype-hibernate5:2.9.6")
+    compile("com.fasterxml.jackson.module:jackson-module-afterburner:2.9.6")
+    
+    // DB
+    compile('com.h2database:h2')
+    runtimeOnly('mysql:mysql-connector-java:8.0.24')    
+	
+	// Liquibase
+	implementation("org.liquibase:liquibase-core:4.3.5")
+	
+	// Dozer
+	implementation group: 'net.sf.dozer', name: 'dozer', version: '5.4.0'
+	
+	// Common Lang3
+	implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.8.1'
+
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
+
+/**
+ * apply querydsl 
+ */
+apply plugin: "com.ewerk.gradle.plugins.querydsl"
+def querydslSrcDir = 'src/main/generated'
+
+
+querydsl {
+    library = "com.querydsl:querydsl-apt"
+    jpa = true
+    querydslSourcesDir = querydslSrcDir
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs 'src/main/java', querydslSrcDir
+        }
+    }
+}
+compileQuerydsl{
+    options.annotationProcessorPath = configurations.querydsl
+}
+
+configurations {
+    querydsl.extendsFrom compileClasspath
+}
+
+compileQuerydsl.doFirst {
+    if(file(querydslSrcDir).exists())
+         delete(file(querydslSrcDir))
+}
