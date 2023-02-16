@@ -25,4 +25,6 @@ public interface CongratsController {
 	@DeleteMapping("/{id}")
 	SuccessOut deletePost();
 		
+	@GetMapping("/mock")
+	SuccessOut saveMockData();
 }

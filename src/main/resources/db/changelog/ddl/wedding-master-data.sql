@@ -1,4 +1,4 @@
-USE emoldino;
+USE wedding;
 
 DROP TABLE IF EXISTS MMS_QUEUE;
 
