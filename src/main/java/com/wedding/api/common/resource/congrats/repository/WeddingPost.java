@@ -1,38 +1,39 @@
-package com.wedding.mkmn.repository.queue;
+package com.wedding.api.common.resource.congrats.repository;
 
 import java.time.Instant;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Index;
-import javax.persistence.Table;
 
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Entity
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
 @EntityListeners(AuditingEntityListener.class)
-public class DataQueue {
-
+public class WeddingPost {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	private String deviceId;	
-	private String deviceType;
-	private String deviceSwVersion;
-	private String deviceTime;
-	private String dataType;
-	private String data;
-		
+	private String name;	
+	private String password;	
+	private String content;	
+	
 	@CreatedDate
-	@Column(updatable = false)
 	private Instant createdAt;
+	@LastModifiedDate
+	private Instant updatedAt;
 }

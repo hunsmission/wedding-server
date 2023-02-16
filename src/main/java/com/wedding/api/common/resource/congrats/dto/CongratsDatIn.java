@@ -1,5 +1,12 @@
 package com.wedding.api.common.resource.congrats.dto;
 
-public class CongratsDatIn {
+import lombok.Builder;
+import lombok.Data;
 
+@Data
+@Builder
+public class CongratsDatIn {
+	private String name;	
+	private String password;	
+	private String content;
 }
