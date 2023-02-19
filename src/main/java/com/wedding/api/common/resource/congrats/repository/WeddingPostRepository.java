@@ -5,5 +5,5 @@ import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 
 
 public interface WeddingPostRepository extends JpaRepository<WeddingPost, Long>, QuerydslPredicateExecutor<WeddingPost>{ 
-
+	boolean existsByName(String name);
 }

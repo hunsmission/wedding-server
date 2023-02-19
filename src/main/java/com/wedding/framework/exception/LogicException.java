@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.wedding.framework.util.Property;
 
-//@ResponseStatus(HttpStatus.NOT_IMPLEMENTED)
+@ResponseStatus(HttpStatus.NOT_IMPLEMENTED)
 @SuppressWarnings("serial")
 public class LogicException extends AbstractException {
 	public static final String CODE = "LOGIC_ERROR";

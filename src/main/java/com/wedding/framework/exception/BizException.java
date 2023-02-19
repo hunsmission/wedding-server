@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.wedding.framework.util.Property;
 
-//@ResponseStatus(HttpStatus.BAD_REQUEST)
+@ResponseStatus(HttpStatus.BAD_REQUEST)
 @SuppressWarnings("serial")
 public class BizException extends AbstractException {
 
