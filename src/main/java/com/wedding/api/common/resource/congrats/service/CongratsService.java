@@ -65,6 +65,11 @@ public class CongratsService {
 		
 		
 		list.add(post1);
+		list.add(post2);
+		list.add(post3);
+		list.add(post4);
+		list.add(post5);
+		list.add(post6);
 		repo.saveAllAndFlush(list);
 	}
 
